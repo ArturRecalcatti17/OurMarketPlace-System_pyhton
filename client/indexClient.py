@@ -1,4 +1,3 @@
-
 from db.neon_connect import conn
 import re
 
@@ -15,6 +14,7 @@ def client():
             elif response.lower() == 'y':
                 login()
         except Exception as err:
+            print(' ')
             print('Something went wrong, please try again: ', err)
             starter()
 
@@ -25,28 +25,39 @@ def signup():
 
     def prompter():
 
+        print(" ")
+        print("--- SIGN UP ----")
+        print(" ")
+
         global name
         name = input('Please type your full name: ')
+        print(' ')
         Verifier()
 
     def is_correct_email(email):
         pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-        re.match(pattern, email)
-        return email
+        if re.match(pattern, email):
+            return email
+        else:
+            print(' ')
 
     def Verifier():
 
         email = input('Please type your email: ')
 
         if is_correct_email(email):
+            print(' ')
             birthdate = input('Please type your birthdate (mm/dd/yyyy): ')
+            print(' ')
             password = input('Please type your password: ')
+            print(' ')
 
             Register(name, email, password, birthdate)
+            login()
 
         else:
-
             print('Your email does not match the pattern of a real email. Please try again!')
+            print(' ')
             Verifier()
 
 
@@ -59,27 +70,38 @@ def signup():
             conn.commit()
             print('The client was registered in our database successfully!')
         except Exception as err:
+            print(' ')
             print(f'Something went wrong, {err}')
+            print(' ')
 
     prompter()
+
 
 def login():
 
     def prompter():
 
+        print(" ")
+        print("--- LOGIN ----")
+        print(" ")
+
         Verifier()
 
     def is_correct_email(email):
         pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-        re.match(pattern, email)
-        return email
+        if re.match(pattern, email):
+            return email
+        else:
+            print(' ')
 
     def Verifier():
 
         email = input('Please type your email: ')
+        print(' ')
 
         if is_correct_email(email):
             password = input('Please type your password: ')
+            print(' ')
             Select(email, password)
 
         else:
@@ -104,11 +126,10 @@ def login():
 
             print('Login successful!')
         except Exception as err:
-            print(f'Something went wrong, {err}')
+
+            print("The information you provided was incorrect. Please try again!")
+            print(' ')
+            login()
 
     prompter()
-
-
-client()
-
 

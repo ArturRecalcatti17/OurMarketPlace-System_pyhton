@@ -12,7 +12,4 @@ connection_pool = pool.SimpleConnectionPool(
     connection_string
 )
 
-if connection_pool:
-    print('sucesso')
-
 conn = connection_pool.getconn()
